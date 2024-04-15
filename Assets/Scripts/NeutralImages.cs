@@ -16,22 +16,16 @@ public class ImageTransition : MonoBehaviour
 
     private System.Collections.IEnumerator TransitionImages()
     {
-        Sprite[] currentSprites = sprites;
+     
         // shuffle the sprites
-        for (int i = 0; i < currentSprites.Length; i++)
-        {
-            Sprite temp = currentSprites[i];
-            int randomIndex = Random.Range(i, currentSprites.Length);
-            currentSprites[i] = currentSprites[randomIndex];
-            currentSprites[randomIndex] = temp;
-        }
-        int counter = 0;
+       
+
 
         while (true)
         {
             yield return FadeImage(false);
 
-            image.sprite = currentSprites[counter++ % currentSprites.Length];
+            image.sprite = sprites[Random.Range(0,sprites.Length-1) ];
 
             AdjustImageSize();
 
@@ -47,7 +41,7 @@ public class ImageTransition : MonoBehaviour
 
         RectTransform canvasRectTransform = canvas.GetComponent<RectTransform>();
 
-        image.rectTransform.sizeDelta = canvasRectTransform.sizeDelta;
+        image.rectTransform.sizeDelta = canvasRectTransform.sizeDelta *0.6f;
         image.rectTransform.anchoredPosition = Vector2.zero;
     }
 

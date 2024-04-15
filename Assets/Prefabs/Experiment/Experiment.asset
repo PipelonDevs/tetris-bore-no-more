@@ -14,20 +14,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneDurations:
   - sceneName: TestScene1
+    durationInSeconds: 1
+    debugEnabled: 1
+  - sceneName: NeutralScene
     durationInSeconds: 5
+    debugEnabled: 0
   - sceneName: ATetrisBoring
     durationInSeconds: 5
+    debugEnabled: 0
   - sceneName: Survey
     durationInSeconds: 5
-  - sceneName: TestScene2
-    durationInSeconds: 5
+    debugEnabled: 1
+  - sceneName: NeutralScene
+    durationInSeconds: 120
+    debugEnabled: 0
   - sceneName: BTetrisFast
-    durationInSeconds: 5
+    durationInSeconds: 420
+    debugEnabled: 0
   - sceneName: Survey
-    durationInSeconds: 5
-  - sceneName: TestScene1
-    durationInSeconds: 5
+    durationInSeconds: 240
+    debugEnabled: 1
+  - sceneName: NeutralScene
+    durationInSeconds: 120
+    debugEnabled: 0
   - sceneName: CTetrisNormal
-    durationInSeconds: 5
+    durationInSeconds: 420
+    debugEnabled: 0
   - sceneName: Survey
-    durationInSeconds: 5
+    durationInSeconds: 240
+    debugEnabled: 0

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -31,7 +32,7 @@ public class WelcomeManager : MonoBehaviour
         clickCount++;
         if (clickCount == 2)
         {
-            StartExperiment();
+           StartExperiment();
         }
     }
 
@@ -41,14 +42,32 @@ public class WelcomeManager : MonoBehaviour
         PlayerPrefs.SetString("userId", userId);
         PrepareExperimentDirectory();
         //Start data collection
-        
-        FindObjectOfType<ExperimentPipeline>().StartExperiment();
+        string rootPath = Application.persistentDataPath;
+        string path = rootPath + "/ExperimentData/" + userId + "/" +"Data_"+ userId + ".csv";
+
+        DataCollector.Instance.StartReceiving(path);
+
+        Debug.Log("Data collection has started, now starting the experiment.");
+
+        var experimentPipeline = FindObjectOfType<ExperimentPipeline>();
+        if (experimentPipeline != null)
+        {
+            experimentPipeline.StartExperiment();
+        }
+        else
+        {
+            Debug.LogError("ExperimentPipeline component not found on any GameObject.");
+        }
     }
+
+  
+
 
 
     void Start()
     {
         userId = System.Guid.NewGuid().ToString();
+
     }
 
 }

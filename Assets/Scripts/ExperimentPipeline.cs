@@ -8,7 +8,7 @@ public class ExperimentPipeline : MonoBehaviour
     public static ExperimentPipeline Instance { get; private set; }
 
     [SerializeField] private Experiment experiment;
-    [SerializeField] private bool isDebugMode;
+    private bool isDebugMode =false;
     private int currentSceneIndex = 0;
     private float currentTime = 0;
     private bool hasStarted = false;
@@ -56,13 +56,17 @@ public class ExperimentPipeline : MonoBehaviour
         currentSceneIndex++;
         if (currentSceneIndex < sceneDurations.Count)
         {
+          
             ResetTimer();
+            isDebugMode = sceneDurations[currentSceneIndex].debugEnabled;
             SceneManager.LoadScene(sceneDurations[currentSceneIndex].sceneName);
         }
         else
         {
             StopTimer();
+            DataCollector.Instance.StopAcquisition();
             Debug.Log("Experiment Finished");
+            SceneManager.LoadScene("Welcome");
         }
     }
 
@@ -81,10 +85,30 @@ public class ExperimentPipeline : MonoBehaviour
 
     public void OnGUI()
     {
+        GUIStyle labelStyle = new GUIStyle(GUI.skin.label)
+        {
+            fontSize = 24,
+            normal = { textColor = Color.white },
+            fontStyle = FontStyle.Bold,
+            alignment = TextAnchor.MiddleCenter,
+            wordWrap = true
+        };
+
+        // Optionally, you can also set alignment, word wrap, etc.
+        labelStyle.alignment = TextAnchor.MiddleCenter;
+        labelStyle.wordWrap = true;
+
         if (hasStarted && isDebugMode)
         {
-            GUILayout.Label("Current Scene: " + sceneDurations[currentSceneIndex].sceneName);
-            GUILayout.Label("Time Left: " + (sceneDurations[currentSceneIndex].durationInSeconds - currentTime));
+            /*        GUILayout.Label("Current Scene: " + sceneDurations[currentSceneIndex].sceneName);*/
+
+            float timeLeft = (sceneDurations[currentSceneIndex].durationInSeconds - currentTime);
+            int minutes = (int)timeLeft / 60;
+            int seconds = (int)timeLeft % 60;
+
+            string formattedTime = string.Format("{0:00}:{1:00}", minutes, seconds);
+
+            GUILayout.Label("Time Left: " + formattedTime, labelStyle);
         }
     }
 }

@@ -19,21 +19,17 @@ public class Survey : MonoBehaviour
         Debug.Log(content);
 
         string rootPath = Application.persistentDataPath;
-        string path = rootPath + "/ExperimentData/"; // TODO: add '+ userId/'
+        string userID = PlayerPrefs.GetString("userId");
+        string path = rootPath + "/ExperimentData/"+userID+"/"; 
 
-        string destinationPath = path + surveyTitle.text + ".txt";
+        string destinationPath = path + surveyTitle.text + "_"+ userID + ".txt";
         System.IO.File.WriteAllText(destinationPath, content);
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void OnDestroy()
     {
-        // TODO: surveyTitle.title += userId;
+        GetSurvey();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }
