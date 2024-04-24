@@ -7,6 +7,7 @@ using System.Net;
 using UnityEngine;
 using System.Threading.Tasks;
 using System.Threading;
+using Unity.Sentis;
 
 public class DataCollector : MonoBehaviour
 {

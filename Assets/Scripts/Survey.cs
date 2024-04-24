@@ -20,10 +20,23 @@ public class Survey : MonoBehaviour
 
         string rootPath = Application.persistentDataPath;
         string userID = PlayerPrefs.GetString("userId");
+        int surveyNumber = PlayerPrefs.GetInt("surveyNumber", 1);
         string path = rootPath + "/ExperimentData/"+userID+"/"; 
 
-        string destinationPath = path + surveyTitle.text + "_"+ userID + ".txt";
-        System.IO.File.WriteAllText(destinationPath, content);
+        if(surveyNumber <=3)
+        {
+            string destinationPath = path + surveyTitle.text +"_" + surveyNumber + "_" + userID + ".txt";
+            System.IO.File.WriteAllText(destinationPath, content);
+            PlayerPrefs.SetInt("surveyNumber", surveyNumber + 1);
+        }
+        else
+        {
+            surveyNumber = 1;
+            string destinationPath = path + surveyTitle.text + "_" + surveyNumber + "_" + userID + ".txt";
+            System.IO.File.WriteAllText(destinationPath, content);
+            PlayerPrefs.SetInt("surveyNumber", surveyNumber+1);
+        }
+        
     }
 
     private void OnDestroy()
